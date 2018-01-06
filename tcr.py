@@ -3,7 +3,18 @@
 import LINETCR
 from LINETCR.lib.curve.ttypes import *
 from datetime import datetime
-import time,random,sys,json,codecs,threading,glob,re
+import time, random, sys, ast, re, os, io, json, subprocess, threading, string, codecs, requests, ctypes, urllib, urllib2, urllib3, wikipedia, tempfile
+from bs4 import BeautifulSoup
+from urllib import urlopen
+import requests
+from io import StringIO
+from threading import Thread
+from gtts import gTTS
+from googletrans import Translator
+try:
+    from requests.packages.urllib3.response import HTTPResponse
+except ImportError:
+    from urllib3.response import HTTPResponse
 
 cl = LINETCR.LINE()
 cl.login(qr=True)
@@ -39,7 +50,6 @@ helpMessage ="""
 ╠❂➣ owner
 ╠❂➣ Youtube
 ╠❂➣ Music
-╠❂➣ Idline
 ╠❂➣ Lirik
 ╠❂➣ Wiki
 ╠❂➣ Creator
@@ -60,7 +70,6 @@ helpMessage ="""
 ╠❂➣ Say-id
 ╠❂➣ Say-en
 ╠❂➣ Say-jp
-╠❂➣ Welcome on/off
 ╚═════════════════════
 ╔═════════════════════
 ║╠❂➣CHIVAS OWNER
