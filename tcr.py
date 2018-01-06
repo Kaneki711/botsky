@@ -1904,29 +1904,30 @@ def bot(op):
                     except:
                         pass
 #-----------------------------------------------
-            elif msg.text in ["Tg","Tagall"]:
-                group = cl.getGroup(msg.to)
-                jw = [contact.mid for contact in group.members]
-                cb = ""
-                cb2 = ""
-                strt = int(0)
-                akh = int(0)
-                for rs in jw:
-                    xname = cl.getContact(rs).displayName
-                    xlen = int(len('x')+1)
-                    akh = akh + xlen
-                    cb += """{"S":"""+json.dumps(str(strt))+""","E":"""+json.dumps(str(akh))+""","M":"""+json.dumps(rs)+"},"""
-                    strt = strt + int(len('x')+3)
-                    akh = akh + 2
-                    cb2 += "@x \n"
-                cb = (cb[:int(len(cb)-1)])
-                msg.contentType = 0
-                msg.text = cb2
-                msg.contentMetadata ={'MENTION':'{"MENTIONEES":['+cb+']}','EMTVER':'d'}
-                try:
-                    cl.sendMessage(msg)
-                except Exception as error:
-                    print error
+            elif "playstore " in msg.text.lower():
+                    tob = msg.text.lower().replace("playstore ","")
+                    kr.sendText(msg.to,"Sedang Mencari boss...")
+                    kr.sendText(msg.to,"Title : "+tob+"\nSource : Google Play\nLinknya : https://play.google.com/store/search?q=" + tob)
+                    kr.sendText(msg.to,"Ketemu boss ^")
+                    
+            elif 'wiki ' in msg.text.lower():
+                    try:
+                        wiki = msg.text.lower().replace("wiki ","")
+                        wikipedia.set_lang("id")
+                        pesan="Title ("
+                        pesan+=wikipedia.page(wiki).title
+                        pesan+=")\n\n"
+                        pesan+=wikipedia.summary(wiki, sentences=3)
+                        pesan+="\n"
+                        pesan+=wikipedia.page(wiki).url
+                        kr.sendText(msg.to, pesan)
+                    except:
+                            try:
+                                pesan="Teks nya kepanjangan! ketik link dibawah aja\n"
+                                pesan+=wikipedia.page(wiki).url
+                                kr.sendText(msg.to, pesan)
+                            except Exception as e:
+                                kr.sendText(msg.to, str(e))
 #-----------------------------------------------
             elif msg.text in ["Welcome on","welcome on"]:
                 if msg.from_ in admin:
@@ -2136,7 +2137,7 @@ def bot(op):
 				kc.sendText(msg.to,(bctxt))
 #-----------------------------------------------
             elif msg.text in ["Glist"]:
-                if msg.from_ in owner:
+                if msg.from_ in admin:
                     gid = kr.getGroupIdsJoined()
                     h = ""
                     for i in gid:
@@ -2197,7 +2198,6 @@ def bot(op):
 #-----------------------------------------------
 #-----------------------------------------------
             elif "youtube " in msg.text:
-                if msg.from_ in admin:
                     try:
                         textToSearch = (msg.text).replace("youtube ", "").strip()
                         query = urllib.quote(textToSearch)
@@ -2213,7 +2213,6 @@ def bot(op):
                         kr.sendText(msg.to, "Could not find it")
 
             elif "Yt " in msg.text:
-                if msg.from_ in admin:
                         query = msg.text.replace("Yt ","")
                         query = yt(query)
                         with requests.session() as s:
@@ -2235,7 +2234,6 @@ def bot(op):
                              kr.sendText(msg.to,hasil)
 
             elif "Youtube " in msg.text:
-                if msg.from_ in admin:
                     query = msg.text.replace("Youtube ","")
                     with requests.session() as s:
                         s.headers['user-agent'] = 'Mozilla/5.0'
@@ -2252,7 +2250,6 @@ def bot(op):
                         print '[Command] Youtube Search'
                         
             elif "Lirik " in msg.text:
-                if msg.from_ in admin:
                     try:
                         songname = msg.text.lower().replace("Lirik ","")
                         params = {'songname': songname}
@@ -2269,7 +2266,6 @@ def bot(op):
                             kr.sendText(msg.to, str(wak))
                             
             elif "Wikipedia " in msg.text:
-                if msg.from_ in admin:
                     try:
                         wiki = msg.text.lower().replace("Wikipedia ","")
                         wikipedia.set_lang("id")
@@ -2289,7 +2285,6 @@ def bot(op):
                             kr.sendText(msg.to, str(e))
                               
             elif "Music " in msg.text:
-                if msg.from_ in admin:
                     try:
                         songname = msg.text.lower().replace("Music ","")
                         params = {'songname': songname}
@@ -2308,7 +2303,6 @@ def bot(op):
                             kr.sendText(msg.to, str(njer))
                 
             elif "Image " in msg.text:
-                if msg.from_ in admin:
                     search = msg.text.replace("Image ","")
                     url = 'https://www.google.com/search?espv=2&biw=1366&bih=667&tbm=isch&oq=kuc&aqs=mobile-gws-lite.0.0l5&q=' + search
                     raw_html = (download_page(url))
@@ -2323,7 +2317,6 @@ def bot(op):
                         pass           
                 
             elif "Profileig " in msg.text:
-                if msg.from_ in admin:
                     try:
                         instagram = msg.text.replace("Profileig ","")
                         response = requests.get("https://www.instagram.com/"+instagram+"?__a=1")
@@ -2560,25 +2553,42 @@ def bot(op):
 #-----------------------------------------------
 #-----------------------------------------------
 #-----------------------------------------------
-            elif msg.text in ["Cv say hinata pekok"]:
-                ki.sendText(msg.to,"Hinata pekok 􀜁􀅔Har Har􏿿")
-                kk.sendText(msg.to,"Hinata pekok 􀜁􀅔Har Har􏿿")
-                kc.sendText(msg.to,"Hinata pekok 􀜁􀅔Har Har􏿿")
-            elif msg.text in ["Cv say didik pekok"]:
-                ki.sendText(msg.to,"Didik pekok 􀜁􀅔Har Har􏿿")
-                kk.sendText(msg.to,"Didik pekok 􀜁􀅔Har Har􏿿")
-                kc.sendText(msg.to,"Didik pekok 􀜁􀅔Har Har􏿿")
-            elif msg.text in ["Cv say bobo ah","Bobo dulu ah"]:
-                ki.sendText(msg.to,"Have a nice dream Cv 􀜁􀅔Har Har􏿿")
-                kk.sendText(msg.to,"Have a nice dream Cv 􀜁􀅔Har Har􏿿")
-                kc.sendText(msg.to,"Have a nice dream Cv 􀜁􀅔Har Har􏿿")
-            elif msg.text in ["Cv say chomel pekok"]:
-                ki.sendText(msg.to,"Chomel pekok 􀜁􀅔Har Har􏿿")
-                kk.sendText(msg.to,"Chomel pekok 􀜁􀅔Har Har􏿿")
-                kc.sendText(msg.to,"Chomel pekok 􀜁􀅔Har Har􏿿")
-            elif msg.text in ["#welcome"]:
-                ki.sendText(msg.to,"Selamat datang di Chivas Family Room")
-                kk.sendText(msg.to,"Jangan nakal ok!")
+            elif "image " in msg.text:
+                    search = msg.text.replace("image ","")
+                    url = 'https://www.google.com/search?espv=2&biw=1366&bih=667&tbm=isch&oq=kuc&aqs=mobile-gws-lite.0.0l5&q=' + search
+                    raw_html = (download_page(url))
+                    items = []
+                    items = items + (_images_get_all_items(raw_html))
+                    path = random.choice(items)
+                    print path
+                    try:
+                        kr.sendImageWithURL(msg.to,path)
+                        kr.sendImageWithURL(self, to_, url)
+                        kr.sendImage(self, to_, path)
+                    except:
+                        pass
+                    
+            elif 'instagram ' in msg.text.lower():
+                    try:
+                        instagram = msg.text.lower().replace("instagram ","")
+                        html = requests.get('https://www.instagram.com/' + instagram + '/?')
+                        soup = BeautifulSoup(html.text, 'html5lib')
+                        data = soup.find_all('meta', attrs={'property':'og:description'})
+                        text = data[0].get('content').split()
+                        data1 = soup.find_all('meta', attrs={'property':'og:image'})
+                        text1 = data1[0].get('content').split()
+                        user = "Name: " + text[-2] + "\n"
+                        user1 = "Username: " + text[-1] + "\n"
+                        followers = "Followers: " + text[0] + "\n"
+                        following = "Following: " + text[2] + "\n"
+                        post = "Post: " + text[4] + "\n"
+                        link = "Link: " + "https://www.instagram.com/" + instagram
+                        detail = "**INSTAGRAM INFO USER**\n"
+                        details = "\n**INSTAGRAM INFO USER**"
+                        kr.sendText(msg.to, detail + user + user1 + followers + following + post + link + details)
+                        kr.sendImageWithURL(msg.to, text1[0])
+                    except Exception as njer:
+                    	kr.sendText(msg.to, str(njer))
 #-----------------------------------------------
             elif msg.text in ["PING","Ping","ping"]:
                 ki.sendText(msg.to,"PONG 􀨁􀄻double thumbs up􏿿􀜁􀅔Har Har􏿿")
@@ -2749,6 +2759,174 @@ def bot(op):
     except Exception as error:
         print error
 
+#==============================================#
+        if op.type == 17:
+            if op.param2 not in Bots:
+                if op.param2 in Bots:
+                    pass
+                if op.param2 in admin:
+                    pass
+            if wait["protect"] == True:
+                if wait["blacklist"][op.param2] == True:
+                    try:
+                        kr.kickoutFromGroup(op.param1,[op.param2])
+                        G = kr.getGroup(op.param1)
+                        G.preventJoinByTicket = True
+                        kr.updateGroup(G)
+                    except:
+                        try:
+                            kr.kickoutFromGroup(op.param1,[op.param2])
+                            G = kr.getGroup(op.param1)
+                            G.preventJoinByTicket = True
+                            kr.updateGroup(G)
+                        except:
+                            pass
+        if op.type == 19:
+            if op.param2 not in Bots:
+                if op.param2 in Bots:
+                    pass
+                if op.param2 in admin:
+                    pass
+                elif wait["protect"] == True:
+                    wait ["blacklist"][op.param2] = True
+                    kr.kickoutFromGroup(op.param1,[op.param2])
+                    kr.inviteIntoGroup(op.param1,[op.param2])
+        if op.type == 13:
+            if op.param2 not in Bots:
+                if op.param2 in Bots:
+                    pass
+                if op.param2 in admin:
+                    pass
+                elif wait["inviteprotect"] == True:
+                    wait ["blacklist"][op.param2] = True
+                    kr.kickoutFromGroup(op.param1,[op.param2])
+                    if op.param2 not in Bots:
+                        if op.param2 in Bots:
+                            pass
+                        elif wait["inviteprotect"] == True:
+                            wait ["blacklist"][op.param2] = True
+                            kr.cancelGroupInvitation(op.param1,[op.param3])
+                            if op.param2 not in Bots:
+                                if op.param2 in Bots:
+                                    pass
+                                elif wait["cancelprotect"] == True:
+                                    wait ["blacklist"][op.param2] = True
+                                    kr.cancelGroupInvitation(op.param1,[op.param3])
+        if op.type == 11:
+            if op.param2 not in Bots:
+                if op.param2 in Bots:
+                    pass
+                if op.param2 in admin:
+                    pass
+                elif wait["linkprotect"] == True:
+                    wait ["blacklist"][op.param2] = True
+                    G = kr.getGroup(op.param1)
+                    G.preventJoinByTicket = True
+                    kr.updateGroup(G)
+                    kr.kickoutFromGroup(op.param1,[op.param2])
+        if op.type == 5:
+            if wait['autoAdd'] == True:
+                if (wait['message'] in [""," ","\n",None]):
+                    pass
+                else:
+                    kr.sendText(op.param1,str(wait['message']))
+        if op.type == 11:
+            if wait["linkprotect"] == True:
+                if op.param2 not in Bots:
+                    G = kr.getGroup(op.param1)
+                    G.preventJoinByTicket = True
+                    kr.kickoutFromGroup(op.param1,[op.param2])
+                    kr.updateGroup(G)
+        if op.type == 17:
+           if wait["Wc"] == True:
+               if op.param2 in Bots:
+                 return
+               ginfo = kr.getGroup(op.param1)
+               kr.sendText(op.param1, "╔═════════════\n║Selamat Datang Di  " + str(ginfo.name) + "\n╠═════════════\n" + "║Founder =>>> " + str(ginfo.name) + " :\n║" + ginfo.creator.displayName + "\n╠═════════════\n" + "║😊Semoga Betah Kak 😘 \n╚═════════════")
+               print "MEMBER HAS JOIN THE GROUP"
+        if op.type == 15:
+            if wait["Lv"] == True:
+                if op.param2 in Bots:
+                    return
+                kr.sendText(op.param1, "╔═════════════\n║Baper Tuh Orang :v \n║Semoga Bahagia ya 😊 \n╚═════════════")
+                print "MEMBER HAS LEFT THE GROUP"
+#==============================================#
+        if op.type == 55:
+            try:
+                if op.param1 in wait2['readPoint']:
+           
+                    if op.param2 in wait2['readMember'][op.param1]:
+                        pass
+                    else:
+                        wait2['readMember'][op.param1] += op.param2
+                    wait2['ROM'][op.param1][op.param2] = op.param2
+                    with open('sider.json', 'w') as fp:
+                     json.dump(wait2, fp, sort_keys=True, indent=4)
+                else:
+                    pass
+            except:
+                pass           
+            
+        
+        if op.type == 59:
+            print op
+    
+    
+    except Exception as error:
+        print error
+
+def autolike():
+    count = 1
+    while True:
+        try:
+           for posts in kr.activity(1)["result"]["posts"]:
+             if posts["postInfo"]["liked"] is False:
+                if wait['likeOn'] == True:
+                   kr.like(posts["userInfo"]["writerMid"], posts["postInfo"]["postId"], 1001)
+                   print "Like"
+                   if wait["commentOn"] == True:
+                      if posts["userInfo"]["writerMid"] in wait["commentBlack"]:
+                         pass
+                      else:
+                          cl.comment(posts["userInfo"]["writerMid"],posts["postInfo"]["postId"],wait["comment"])
+        except:
+            count += 1
+            if(count == 50):
+                sys.exit(0)
+            else:
+                pass
+thread2 = threading.Thread(target=autolike)
+thread2.daemon = True
+thread2.start()
+
+def likefriend():
+    for zx in range(0,20):
+      hasil = kr.activity(limit=20)
+      if hasil['result']['posts'][zx]['postInfo']['liked'] == False:
+        try:
+          cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1001)
+          cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto like By Skyline Team\nMy OA line.me/ti/p/~@enr7503k")
+          print "Like"
+        except:
+          pass
+      else:
+          print "Already Liked Om"
+time.sleep(0.60)
+
+def likeme():
+    for zx in range(0,20):
+        hasil = kr.activity(limit=20)
+        if hasil['result']['posts'][zx]['postInfo']['liked'] == False:
+            if hasil['result']['posts'][zx]['userInfo']['mid'] in mid:
+                try:
+                    cl.like(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],likeType=1002)
+                    cl.comment(hasil['result']['posts'][zx]['userInfo']['mid'],hasil['result']['posts'][zx]['postInfo']['postId'],"Auto like By Skyline Team\nMy OA line.me/ti/p/~@enr7503k")
+                    print "Like"
+                except:
+                    pass
+            else:
+                print "Status Sudah di Like Om"
+#====================================================
 
 def a2():
     now2 = datetime.now()
