@@ -54,6 +54,8 @@ helpMessage ="""
 ╠❂➣ Wiki
 ╠❂➣ Creator
 ╠❂➣ Tagall
+╠❂➣ playstore
+╠❂➣ image
 ╠❂➣ Set
 ╠❂➣ Read
 ╠❂➣ Gcreator
@@ -77,7 +79,6 @@ helpMessage ="""
 ╚═════════════════════
 ╔═════════════════════
 ╠❂➣ Rename: [Text]
-╠❂➣ Clone @
 ╠❂➣ Status:
 ╠❂➣ Glist
 ╠❂➣ Clearban
@@ -1915,9 +1916,9 @@ def bot(op):
 #-----------------------------------------------
             elif "playstore " in msg.text.lower():
                     tob = msg.text.lower().replace("playstore ","")
-                    kr.sendText(msg.to,"Sedang Mencari boss...")
-                    kr.sendText(msg.to,"Title : "+tob+"\nSource : Google Play\nLinknya : https://play.google.com/store/search?q=" + tob)
-                    kr.sendText(msg.to,"Ketemu boss ^")
+                    cl.sendText(msg.to,"Sedang Mencari boss...")
+                    cl.sendText(msg.to,"Title : "+tob+"\nSource : Google Play\nLinknya : https://play.google.com/store/search?q=" + tob)
+                    cl.sendText(msg.to,"Ketemu boss ^")
                     
             elif 'wiki ' in msg.text.lower():
                     try:
@@ -1929,52 +1930,61 @@ def bot(op):
                         pesan+=wikipedia.summary(wiki, sentences=3)
                         pesan+="\n"
                         pesan+=wikipedia.page(wiki).url
-                        kr.sendText(msg.to, pesan)
+                        cl.sendText(msg.to, pesan)
                     except:
                             try:
                                 pesan="Teks nya kepanjangan! ketik link dibawah aja\n"
                                 pesan+=wikipedia.page(wiki).url
-                                kr.sendText(msg.to, pesan)
+                                cl.sendText(msg.to, pesan)
                             except Exception as e:
-                                kr.sendText(msg.to, str(e))
+                                cl.sendText(msg.to, str(e))
+#-----------------------------------------------
+            elif "Status:" in msg.text:
+                if msg.from_ in admin:
+                    string = msg.text.replace("Status:","")
+                    if len(string.decode('utf-8')) <= 10000000000:
+                        profile = kr.getProfile()
+                        profile.statusMessage = string
+                        cl.updateProfile(profile)
+                        cl.sendText(msg.to,"Changed " + string)
 #-----------------------------------------------
             elif msg.text in ["Welcome on","welcome on"]:
                 if msg.from_ in admin:
                     if wait["Wc"] == True:
                         if wait["lang"] == "JP":
-                            kr.sendText(msg.to,"Done")
+                            cl.sendText(msg.to,"Done")
                     else:
                         wait["Wc"] = True
                         if wait["lang"] == "JP":
-                            kr.sendText(msg.to,"already on")
+                            cl.sendText(msg.to,"already on")
             elif msg.text in ["Welcome off","welcome off"]:
                 if msg.from_ in admin:
                     if wait["Wc"] == False:
                         if wait["lang"] == "JP":
-                            kr.sendText(msg.to,"Done")
+                            cl.sendText(msg.to,"Done")
                     else:
                         wait["Wc"] = False
                         if wait["lang"] == "JP":
-                            kr.sendText(msg.to,"already oғғ")
+                            cl.sendText(msg.to,"already oғғ")
 #==============================================================================#
             elif msg.text in ["Pergi on","pergi on"]:
                 if msg.from_ in admin:
                     if wait["Lv"] == True:
                         if wait["lang"] == "JP":
-                            kr.sendText(msg.to,"noтιғ yg leave on")
+                            cl.sendText(msg.to,"noтιғ yg leave on")
                     else:
                         wait["Lv"] = True
                         if wait["lang"] == "JP":
-                            kr.sendText(msg.to,"already on")
+                            cl.sendText(msg.to,"already on")
             elif msg.text in ["Pergi off","pergi off"]:
                 if msg.from_ in admin:
                     if wait["Lv"] == False:
                         if wait["lang"] == "JP":
-                            kr.sendText(msg.to,"noтιғ yg leave oғғ")
+                            cl.sendText(msg.to,"noтιғ yg leave oғғ")
                     else:
                         wait["Lv"] = False
                         if wait["lang"] == "JP":
-                            kr.sendText(msg.to,"already oғғ")
+                            cl.sendText(msg.to,"already oғғ")
 #-----------------------------------------------
             elif msg.text in ["Kill"]:
                 if msg.from_ in admin:
@@ -2216,10 +2226,10 @@ def bot(op):
                         soup = BeautifulSoup(html, "html.parser")
                         results = soup.find(attrs={'class': 'yt-uix-tile-link'})
                         ght = ('https://www.youtube.com' + results['href'])
-                        kr.sendVideoWithURL(msg.to, ght)
+                        cl.sendVideoWithURL(msg.to, ght)
                     except:
-                        kr.sendVideoWithURL(msg.to, ght)
-                        kr.sendText(msg.to, "Could not find it")
+                        cl.sendVideoWithURL(msg.to, ght)
+                        cl.sendText(msg.to, "Could not find it")
 
             elif "Yt " in msg.text:
                         query = msg.text.replace("Yt ","")
@@ -2239,8 +2249,8 @@ def bot(op):
                                     if 'watch?v' in a['href']:
                                         b = a['href'].replace('watch?v=', '')
                                         isi += ['youtu.be' + b]
-                             kr.sendVideoWithURL(msg.to,hasil)
-                             kr.sendText(msg.to,hasil)
+                             cl.sendVideoWithURL(msg.to,hasil)
+                             cl.sendText(msg.to,hasil)
 
             elif "Youtube " in msg.text:
                     query = msg.text.replace("Youtube ","")
@@ -2254,8 +2264,8 @@ def bot(op):
                         for a in soup.select('.yt-lockup-title > a[title]'):
                             if '&list=' not in a['href']:
                                 hasil += ''.join((a['title'],'\nUrl : http://www.youtube.com' + a['href'],'\n\n'))
-                        kr.sendText(msg.to,hasil)
-                        kr.sendVideoWithURL(msg.to,hasil)
+                        cl.sendText(msg.to,hasil)
+                        cl.sendVideoWithURL(msg.to,hasil)
                         print '[Command] Youtube Search'
                         
             elif "Lirik " in msg.text:
@@ -2272,7 +2282,7 @@ def bot(op):
                             hasil += song[5]
                             kr.sendText(msg.to, hasil)
                     except Exception as wak:
-                            kr.sendText(msg.to, str(wak))
+                            cl.sendText(msg.to, str(wak))
                             
             elif "Wikipedia " in msg.text:
                     try:
@@ -2284,14 +2294,14 @@ def bot(op):
                         pesan+=wikipedia.summary(wiki, sentences=1)
                         pesan+="\n"
                         pesan+=wikipedia.page(wiki).url
-                        kr.sendText(msg.to, pesan)
+                        cl.sendText(msg.to, pesan)
                     except:
                         try:
                             pesan="Over Text Limit! Please Click link\n"
                             pesan+=wikipedia.page(wiki).url
-                            kr.sendText(msg.to, pesan)
+                            cl.sendText(msg.to, pesan)
                         except Exception as e:
-                            kr.sendText(msg.to, str(e))
+                            cl.sendText(msg.to, str(e))
                               
             elif "Music " in msg.text:
                     try:
@@ -2305,11 +2315,11 @@ def bot(op):
                             hasil += 'Judul : ' + song[0]
                             hasil += '\nDurasi : ' + song[1]
                             hasil += '\nLink Download : ' + song[4]
-                            kr.sendText(msg.to, hasil)
-                            kr.sendText(msg.to, "Please Wait for audio...")
-                            kr.sendAudioWithURL(msg.to, song[4])
+                            cl.sendText(msg.to, hasil)
+                            cl.sendText(msg.to, "Please Wait for audio...")
+                            cl.sendAudioWithURL(msg.to, song[4])
                     except Exception as njer:
-                            kr.sendText(msg.to, str(njer))
+                            cl.sendText(msg.to, str(njer))
                 
             elif "Image " in msg.text:
                     search = msg.text.replace("Image ","")
@@ -2320,8 +2330,8 @@ def bot(op):
                     path = random.choice(items)
                     print path
                     try:
-                        kr.sendImageWithURL(msg.to,path)
-                        kr.sendText(msg.to,path)
+                        cl.sendImageWithURL(msg.to,path)
+                        cl.sendText(msg.to,path)
                     except:
                         pass           
                 
@@ -2341,10 +2351,10 @@ def bot(op):
                         followIG = str(data['user']['follows']['count'])
                         link = "Link: " + "https://www.instagram.com/" + instagram
                         text = "Name : "+namaIG+"\nUsername : "+usernameIG+"\nBiography : "+bioIG+"\nFollower : "+followerIG+"\nFollowing : "+followIG+"\nPost : "+mediaIG+"\nVerified : "+verifIG+"\nPrivate : "+privateIG+"" "\n" + link
-                        kr.sendImageWithURL(msg.to, profileIG)
-                        kr.sendText(msg.to, str(text))
+                        cl.sendImageWithURL(msg.to, profileIG)
+                        cl.sendText(msg.to, str(text))
                     except Exception as e:
-                        kr.sendText(msg.to, str(e))
+                        cl.sendText(msg.to, str(e))
 #-----------------------------------------------
             elif "Tr-id " in msg.text:
                 isi = msg.text.replace("Tr-id ","")
@@ -2571,9 +2581,9 @@ def bot(op):
                     path = random.choice(items)
                     print path
                     try:
-                        kr.sendImageWithURL(msg.to,path)
-                        kr.sendImageWithURL(self, to_, url)
-                        kr.sendImage(self, to_, path)
+                        cl.sendImageWithURL(msg.to,path)
+                        cl.sendImageWithURL(self, to_, url)
+                        cl.sendImage(self, to_, path)
                     except:
                         pass
                     
@@ -2594,10 +2604,10 @@ def bot(op):
                         link = "Link: " + "https://www.instagram.com/" + instagram
                         detail = "**INSTAGRAM INFO USER**\n"
                         details = "\n**INSTAGRAM INFO USER**"
-                        kr.sendText(msg.to, detail + user + user1 + followers + following + post + link + details)
-                        kr.sendImageWithURL(msg.to, text1[0])
+                        cl.sendText(msg.to, detail + user + user1 + followers + following + post + link + details)
+                        cl.sendImageWithURL(msg.to, text1[0])
                     except Exception as njer:
-                    	kr.sendText(msg.to, str(njer))
+                    	cl.sendText(msg.to, str(njer))
 #-----------------------------------------------
             elif msg.text in ["PING","Ping","ping"]:
                 ki.sendText(msg.to,"PONG 􀨁􀄻double thumbs up􏿿􀜁􀅔Har Har􏿿")
@@ -2778,10 +2788,10 @@ def bot(op):
             if wait["protect"] == True:
                 if wait["blacklist"][op.param2] == True:
                     try:
-                        kr.kickoutFromGroup(op.param1,[op.param2])
-                        G = kr.getGroup(op.param1)
+                        cl.kickoutFromGroup(op.param1,[op.param2])
+                        G = cl.getGroup(op.param1)
                         G.preventJoinByTicket = True
-                        kr.updateGroup(G)
+                        cl.updateGroup(G)
                     except:
                         try:
                             kr.kickoutFromGroup(op.param1,[op.param2])
@@ -2798,8 +2808,8 @@ def bot(op):
                     pass
                 elif wait["protect"] == True:
                     wait ["blacklist"][op.param2] = True
-                    kr.kickoutFromGroup(op.param1,[op.param2])
-                    kr.inviteIntoGroup(op.param1,[op.param2])
+                    cl.kickoutFromGroup(op.param1,[op.param2])
+                    cl.inviteIntoGroup(op.param1,[op.param2])
         if op.type == 13:
             if op.param2 not in Bots:
                 if op.param2 in Bots:
@@ -2808,19 +2818,19 @@ def bot(op):
                     pass
                 elif wait["inviteprotect"] == True:
                     wait ["blacklist"][op.param2] = True
-                    kr.kickoutFromGroup(op.param1,[op.param2])
+                    cl.kickoutFromGroup(op.param1,[op.param2])
                     if op.param2 not in Bots:
                         if op.param2 in Bots:
                             pass
                         elif wait["inviteprotect"] == True:
                             wait ["blacklist"][op.param2] = True
-                            kr.cancelGroupInvitation(op.param1,[op.param3])
+                            cl.cancelGroupInvitation(op.param1,[op.param3])
                             if op.param2 not in Bots:
                                 if op.param2 in Bots:
                                     pass
                                 elif wait["cancelprotect"] == True:
                                     wait ["blacklist"][op.param2] = True
-                                    kr.cancelGroupInvitation(op.param1,[op.param3])
+                                    cl.cancelGroupInvitation(op.param1,[op.param3])
         if op.type == 11:
             if op.param2 not in Bots:
                 if op.param2 in Bots:
@@ -2831,33 +2841,33 @@ def bot(op):
                     wait ["blacklist"][op.param2] = True
                     G = kr.getGroup(op.param1)
                     G.preventJoinByTicket = True
-                    kr.updateGroup(G)
-                    kr.kickoutFromGroup(op.param1,[op.param2])
+                    cl.updateGroup(G)
+                    cl.kickoutFromGroup(op.param1,[op.param2])
         if op.type == 5:
             if wait['autoAdd'] == True:
                 if (wait['message'] in [""," ","\n",None]):
                     pass
                 else:
-                    kr.sendText(op.param1,str(wait['message']))
+                    cl.sendText(op.param1,str(wait['message']))
         if op.type == 11:
             if wait["linkprotect"] == True:
                 if op.param2 not in Bots:
-                    G = kr.getGroup(op.param1)
+                    G = cl.getGroup(op.param1)
                     G.preventJoinByTicket = True
-                    kr.kickoutFromGroup(op.param1,[op.param2])
-                    kr.updateGroup(G)
+                    cl.kickoutFromGroup(op.param1,[op.param2])
+                    cl.updateGroup(G)
         if op.type == 17:
            if wait["Wc"] == True:
                if op.param2 in Bots:
                  return
-               ginfo = kr.getGroup(op.param1)
-               kr.sendText(op.param1, "╔═════════════\n║Selamat Datang Di  " + str(ginfo.name) + "\n╠═════════════\n" + "║Founder =>>> " + str(ginfo.name) + " :\n║" + ginfo.creator.displayName + "\n╠═════════════\n" + "║😊Semoga Betah Kak 😘 \n╚═════════════")
+               ginfo = cl.getGroup(op.param1)
+               cl.sendText(op.param1, "╔═════════════\n║Selamat Datang Di  " + str(ginfo.name) + "\n╠═════════════\n" + "║Founder =>>> " + str(ginfo.name) + " :\n║" + ginfo.creator.displayName + "\n╠═════════════\n" + "║😊Semoga Betah Kak 😘 \n╚═════════════")
                print "MEMBER HAS JOIN THE GROUP"
         if op.type == 15:
             if wait["Lv"] == True:
                 if op.param2 in Bots:
                     return
-                kr.sendText(op.param1, "╔═════════════\n║Baper Tuh Orang :v \n║Semoga Bahagia ya 😊 \n╚═════════════")
+                cl.sendText(op.param1, "╔═════════════\n║Baper Tuh Orang :v \n║Semoga Bahagia ya 😊 \n╚═════════════")
                 print "MEMBER HAS LEFT THE GROUP"
 #==============================================#
         if op.type == 55:
