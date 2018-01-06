@@ -15,59 +15,71 @@ print "login success"
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-helpMessage =""" Chivas Bot
-[Id︎]
-[Mid]
-[Me︎]
-[TL︎:「Text」]
-[Mc 「mid」]
-[K on/off]
-[Join︎ on/off]
-[Gcancel:︎「Number of people」]
-[Group cancelalll︎]
-[Leave︎ on/off]
-[Add on/off]
-[Share on/off]
-[Message change:「text」]
-[Message check]
-[Confirm]
-[Jam on/off]
-[Change clock:「name」]
-[Up]
-[Cv join]
-
-[*] Command in the groups [*]
-
-[Curl]
-[Ourl]
-[url]
-[url:「Group ID」]
-[Invite：「mid」]
-[Kick：「mid」]
-[Ginfo]
-[jointicket]
-[Cancel]
-[Gn 「group name」]
-[Nk 「name」]
-
-[*] Command kicker only [*]
-
-[Bye]
-[Kill ban]
-[Kill 「@」]
-[Ban 「@」] By Tag
-[Unban 「@」] By Tag
-[Ban︎] Share Contact
-[Unban︎] Share Contact
-[Banlist︎]
-[Cek ban]
-[Cv mid]
-[Cv ︎invite:「mid」]
-[Cv ︎rename:「name」]
-[Cv ︎gift]
-[Respo︎n]
-[Bot cancel]
-[Title:]
+helpMessage ="""
+╔═════════════════════
+║╠❂➣CHIVAS PUBLIC
+║╠❂➣CREATOR SKYLINE
+╚═════════════════════
+╔═════════════════════
+╠❂➣ Id︎
+╠❂➣ Mid
+╠❂➣ Me︎
+╠❂➣ Mc 「mid」
+╠❂➣ Group cancelalll︎
+╠❂➣ Curl
+╠❂➣ Ourl
+╠❂➣ url
+╠❂➣ url:「Group ID」
+╠❂➣ Invite：「mid」
+╠❂➣ Ginfo
+╠❂➣ Cancel
+╠❂➣ Gn 「group name」
+╠❂➣ Sp
+╠❂➣ say [Text]
+╠❂➣ owner
+╠❂➣ Youtube
+╠❂➣ Music
+╠❂➣ Idline
+╠❂➣ Lirik
+╠❂➣ Wiki
+╠❂➣ Creator
+╠❂➣ Tagall
+╠❂➣ Set
+╠❂➣ Read
+╠❂➣ Gcreator
+╠❂➣ Id-en
+╠❂➣ En-id
+╠❂➣ Id-jp
+╠❂➣ Jp-id
+╠❂➣ Id-th
+╠❂➣ Th-id
+╠❂➣ Id-ar
+╠❂➣ Ar-id
+╠❂➣ Id-ko
+╠❂➣ Ko-id
+╠❂➣ Say-id
+╠❂➣ Say-en
+╠❂➣ Say-jp
+╠❂➣ Welcome on/off
+╚═════════════════════
+╔═════════════════════
+║╠❂➣CHIVAS OWNER
+║╠❂➣CREATOR SKYLINE
+╚═════════════════════
+╔═════════════════════
+╠❂➣ Rename: [Text]
+╠❂➣ Clone @
+╠❂➣ Status:
+╠❂➣ Glist
+╠❂➣ Clearban
+╠❂➣ Ban
+╠❂➣ Gbc
+╠❂➣ Cbc
+╠❂➣ Ratakan
+╠❂➣ Qr on
+╠❂➣ Cancel on
+╠❂➣ Protect on
+╚═════════════════════
 """
 KAC=[cl,ki,kk,kc]
 mid = cl.getProfile().mid
@@ -84,20 +96,26 @@ wait = {
     'leaveRoom':True,
     'timeline':True,
     'autoAdd':True,
-    'message':"Thanks for add me",
+    'message':"Thanks For add Me\nOpen Order Bot Protection\nOwner,Admin,Staff Ready\nMinat Chat Creator line.me/ti/p/~@enr7503k",
     "lang":"JP",
-    "comment":"Thanks for add me",
+    "comment":"Thanks For add Me\nOpen Order Bot Protection\nOwner,Admin,Staff Ready\nMinat Chat Creator line.me/ti/p/~@enr7503k",
     "commentOn":False,
     "commentBlack":{},
     "wblack":False,
     "dblack":False,
     "clock":True,
-    "cName":"Chivas ",
+    "cName":"",
+    "Wc":False,
+    "Lv":False,
     "blacklist":{},
     "wblacklist":False,
     "dblacklist":False,
     "protectionOn":True,
     "atjointicket":False
+    "protect":False,
+    "cancelprotect":False,
+    "inviteprotect":False,
+    "linkprotect":False,
     }
 
 wait2 = {
@@ -110,6 +128,365 @@ wait2 = {
 setTime = {}
 setTime = wait2['setTime']
 
+
+agent = {'User-Agent' : "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30)"}
+
+def translate(to_translate, to_language="auto", language="auto"):
+    bahasa_awal = "auto"
+    bahasa_tujuan = to_language
+    kata = to_translate
+    url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+    agent = {'User-Agent':'Mozilla/5.0'}
+    cari_hasil = 'class="t0">'
+    request = urllib2.Request(url, headers=agent)
+    page = urllib2.urlopen(request).read()
+    result = page[page.find(cari_hasil)+len(cari_hasil):]
+    result = result.split("<")[0]
+    return result
+
+def download_page(url):
+    version = (3,0)
+    cur_version = sys.version_info
+    if cur_version >= version:     #If the Current Version of Python is 3.0 or above
+        import urllib,request    #urllib library for Extracting web pages
+        try:
+            headers = {}
+            headers['User-Agent'] = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+            req = urllib,request.Request(url, headers = headers)
+            resp = urllib,request.urlopen(req)
+            respData = str(resp.read())
+            return respData
+        except Exception as e:
+            print(str(e))
+    else:                        #If the Current Version of Python is 2.x
+        import urllib2
+        try:
+            headers = {}
+            headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"
+            req = urllib2.Request(url, headers = headers)
+            response = urllib2.urlopen(req)
+            page = response.read()
+            return page
+        except:
+            return"Page Not found"
+
+def _images_get_next_item(s):
+    start_line = s.find('rg_di')
+    if start_line == -1:    #If no links are found then give an error!
+        end_quote = 0
+        link = "no_links"
+        return link, end_quote
+    else:
+        start_line = s.find('"class="rg_meta"')
+        start_content = s.find('"ou"',start_line+90)
+        end_content = s.find(',"ow"',start_content-90)
+        content_raw = str(s[start_content+6:end_content-1])
+        return content_raw, end_content
+
+def _images_get_all_items(page):
+    items = []
+    while True:
+        item, end_content = _images_get_next_item(page)
+        if item == "no_links":
+            break
+        else:
+            items.append(item)      #Append all the links in the list named 'Links'
+            time.sleep(0.1)        #Timer could be used to slow down the request for image downloads
+            page = page[end_content:]
+    return items
+
+def yt(query):
+    with requests.session() as s:
+         isi = []
+         if query == "":
+             query = "S1B tanysyz"
+         s.headers['user-agent'] = 'Mozilla/5.0'
+         url    = 'http://www.youtube.com/results'
+         params = {'search_query': query}
+         r    = s.get(url, params=params)
+         soup = BeautifulSoup(r.content, 'html5lib')
+         for a in soup.select('.yt-lockup-title > a[title]'):
+            if '&list=' not in a['href']:
+                if 'watch?v' in a['href']:
+                    b = a['href'].replace('watch?v=', '')
+                    isi += ['youtu.be' + b]
+         return isi
+
+def waktu(secs):
+    mins, secs = divmod(secs,60)
+    hours, mins = divmod(mins,60)
+    return '%02d Jam %02d Menit %02d Detik' % (hours, mins, secs)
+
+def upload_tempimage(client):
+     '''
+         Upload a picture of a kitten. We don't ship one, so get creative!
+     '''
+     config = {
+         'album': album,
+         'name':  'bot auto upload',
+         'title': 'bot auto upload',
+         'description': 'bot auto upload'
+     }
+
+     print("Uploading image... ")
+     image = client.upload_from_path(image_path, config=config, anon=False)
+     print("Done")
+     print()
+
+     return image
+
+
+def sendMessage(to, text, contentMetadata={}, contentType=0):
+    mes = Message()
+    mes.to, mes.from_ = to, profile.mid
+    mes.text = text
+    mes.contentType, mes.contentMetadata = contentType, contentMetadata
+    if to not in messageReq:
+        messageReq[to] = -1
+    messageReq[to] += 1
+
+
+def sendMessage(to, text, contentMetadata={}, contentType=0):
+    mes = Message()
+    mes.to, mes.from_ = to, profile.mid
+    mes.text = text
+    mes.contentType, mes.contentMetadata = contentType, contentMetadata
+    if to not in messageReq:
+        messageReq[to] = -1
+    messageReq[to] += 1
+
+def sendImage(self, to_, path):
+        M = Message(to=to_, text=None, contentType = 1)
+        M.contentMetadata = None
+        M.contentPreview = None
+        M_id = self.Talk.client.sendMessage(0,M).id
+        files = {
+            'file': open(path, 'rb'),
+        }
+        params = {
+            'name': 'media',
+            'oid': M_id,
+            'size': len(open(path, 'rb').read()),
+            'type': 'image',
+            'ver': '1.0',
+        }
+        data = {
+            'params': json.dumps(params)
+        }
+
+        r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        if r.status_code != 201:
+            raise Exception('Upload image failure.')
+        return True
+
+def sendImageWithURL(self, to_, url):
+        """Send a image with given image url
+        :param url: image url to send
+        """
+        path = 'pythonLine.data'
+
+        r = requests.get(url, stream=True)
+        if r.status_code == 200:
+            with open(path, 'w') as f:
+                shutil.copyfileobj(r.raw, f)
+        else:
+            raise Exception('Download image failure.')
+
+        try:
+            self.sendImage(to_, path)
+        except Exception as e:
+            raise e
+
+def sendAudioWithURL(self, to_, url):
+      path = 'pythonLiness.data'
+      r = requests.get(url, stream=True)
+      if r.status_code == 200:
+         with open(path, 'w') as f:
+            shutil.copyfileobj(r.raw, f)
+      else:
+         raise Exception('Download Audio failure.')
+      try:
+         self.sendAudio(to_, path)
+      except Exception as e:
+         raise e
+def sendAudio(self, to_, path):
+      M = Message(to=to_,contentType = 3)
+      M.contentMetadata = None
+      M.contentPreview = None
+      M_id = self.Talk.client.sendMessage(0,M).id
+      files = {
+         'file': open(path, 'rb'),
+      }
+      params = {
+         'name': 'media',
+         'oid': M_id,
+         'size': len(open(path, 'rb').read()),
+         'type': 'audio',
+         'ver': '1.0',
+      }
+      data = {
+         'params': json.dumps(params)
+      }
+      r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+      if r.status_code != 201:
+         raise Exception('Upload image failure.')
+      return True
+def sendVideo(self, to_, path):
+      M = Message(to=to_,contentType = 2)
+      M.contentMetadata = {
+           'VIDLEN' : '0',
+           'DURATION' : '0'
+       }
+      M.contentPreview = None
+      M_id = self.Talk.client.sendMessage(0,M).id
+      files = {
+         'file': open(path, 'rb'),
+      }
+      params = {
+         'name': 'media',
+         'oid': M_id,
+         'size': len(open(path, 'rb').read()),
+         'type': 'video',
+         'ver': '1.0',
+      }
+      data = {
+         'params': json.dumps(params)
+      }
+      r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+      if r.status_code != 201:
+         raise Exception('Upload image failure.')
+      return True
+def sendVideoWithURL(self, to_, url):
+      path = 'pythonLines.data'
+      r = requests.get(url, stream=True)
+      if r.status_code == 200:
+         with open(path, 'w') as f:
+            shutil.copyfileobj(r.raw, f)
+      else:
+         raise Exception('Download Audio failure.')
+      try:
+         self.sendVideo(to_, path)
+      except Exception as e:
+         raise e
+
+def sendVoice(self, to_, path):
+        M = Message(to=to_, text=None, contentType = 3)
+        M.contentPreview = None
+        M_id = self._client.sendMessage(0,M).id
+        files = {
+            'file': open(path, 'rb'),
+        }
+        params = {
+            'name': 'voice_message',
+            'oid': M_id,
+            'size': len(open(path, 'rb').read()),
+            'type': 'audio',
+            'ver': '1.0',
+        }
+        data = {
+            'params': json.dumps(params)
+        }
+        r = self.post_content('https://os.line.naver.jp/talk/m/upload.nhn', data=data, files=files)
+        if r.status_code != 201:
+            raise Exception('Upload voice failure.')
+        return True
+
+def restart_program():
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
+def post_content(self, urls, data=None, files=None):
+        return self._session.post(urls, headers=self._headers, data=data, files=files)
+
+def sendMessage(to, text, contentMetadata={}, contentType=0):
+    mes = Message()
+    mes.to, mes.from_ = to, profile.mid
+    mes.text = text
+    mes.contentType, mes.contentMetadata = contentType, contentMetadata
+    if to not in messageReq:
+        messageReq[to] = -1
+    messageReq[to] += 1
+
+def NOTIFIED_READ_MESSAGE(op):
+    try:
+        if op.param1 in wait2['readPoint']:
+            Name = kr.getContact(op.param2).displayName
+            if Name in wait2['readMember'][op.param1]:
+                pass
+            else:
+                wait2['readMember'][op.param1] += "\n9§9" + Name
+                wait2['ROM'][op.param1][op.param2] = "9§9" + Name
+        else:
+            pass
+    except:
+        pass
+
+
+def mention(to,nama):
+    aa = ""
+    bb = ""
+    strt = int(12)
+    akh = int(12)
+    nm = nama
+    #print nm
+    for mm in nm:
+        akh = akh + 2
+        aa += """{"S":"""+json.dumps(str(strt))+""","E":"""+json.dumps(str(akh))+""","M":"""+json.dumps(mm)+"},"""
+        strt = strt + 6
+        akh = akh + 4
+        bb += "► @c \n"
+    aa = (aa[:int(len(aa)-1)])
+    msg = Message()
+    msg.to = to
+    msg.text = "「Mention」\n"+bb
+    msg.contentMetadata = {'MENTION':'{"MENTIONEES":['+aa+']}','EMTVER':'4'}
+    #print msg
+    try:
+         kr.sendMessage(msg)
+    except Exception as error:
+        print error
+
+def removeAllMessages(self, lastMessageId):
+     return self._client.removeAllMessages(0, lastMessageId)
+def summon(to, nama):
+    aa = ""
+    bb = ""
+    strt = int(14)
+    akh = int(14)
+    nm = nama
+    for mm in nm:
+      akh = akh + 2
+      aa += """{"S":"""+json.dumps(str(strt))+""","E":"""+json.dumps(str(akh))+""","M":"""+json.dumps(mm)+"},"""
+      strt = strt + 6
+      akh = akh + 4
+      bb += "\xe2\x95\xa0 @x \n"
+    aa = (aa[:int(len(aa)-1)])
+    msg = Message()
+    msg.to = to
+    msg.text = "\xe2\x95\x94\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\n"+bb+"\xe2\x95\x9a\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90\xe2\x95\x90"
+    msg.contentMetadata ={"MENTION":'{"MENTIONEES":['+aa+']}','EMTVER':'4'}
+    print "[Command] Tag All"
+    try:
+       kr.sendMessage(msg)
+    except Exception as error:
+       print error
+
+def cms(string, commands): #/XXX, >XXX, ;XXX, ^XXX, %XXX, $XXX...
+    tex = ["+","@","/",">",";","^","%","$","＾","サテラ:","サテラ:","サテラ：","サテラ："]
+    for texX in tex:
+        for command in commands:
+            if string ==command:
+                return True
+    return False
+
+def sendMessage(to, text, contentMetadata={}, contentType=0):
+    mes = Message()
+    mes.to, mes.from_ = to, profile.mid
+    mes.text = text
+    mes.contentType, mes.contentMetadata = contentType, contentMetadata
+    if to not in messageReq:
+        messageReq[to] = -1
+    messageReq[to] += 1
 
 def sendMessage(to, text, contentMetadata={}, contentType=0):
     mes = Message()
@@ -562,6 +939,58 @@ def bot(op):
                 msg.contentType = 13
                 msg.contentMetadata = {'mid': mid}
                 cl.sendMessage(msg)
+             elif msg.text.lower() == 'protect on':
+                 if msg.from_ in admin:
+                     if wait["protect"] == True:
+                         if wait["lang"] == "JP":
+                             cl.sendText(msg.to,"Protecion Already On")
+                         else:
+                             cl.sendText(msg.to,"Protecion Already On")
+                     else:
+                         wait["protect"] = True
+                         if wait["lang"] == "JP":
+                             cl.sendText(msg.to,"Protecion Already On")
+                         else:
+                             cl.sendText(msg.to,"Protecion Already On")
+             elif msg.text.lower() == 'qr on':
+                 if msg.from_ in admin:
+                     if wait["linkprotect"] == True:
+                         if wait["lang"] == "JP":
+                             cl.sendText(msg.to,"Protection Qr already On")
+                         else:
+                             cl.sendText(msg.to,"Protection Qr already On")
+                     else:
+                         wait["linkprotect"] = True
+                         if wait["lang"] == "JP":
+                             cl.sendText(msg.to,"Protection Qr already On")
+                         else:
+                             cl.sendText(msg.to,"Protection Qr already On")
+             elif msg.text.lower() == 'invite on':
+                 if msg.from_ in admin:
+                     if wait["inviteprotect"] == True:
+                         if wait["lang"] == "JP":
+                             cl.sendText(msg.to,"Protection Invite already On")
+                         else:
+                             cl.sendText(msg.to,"Protection Invite already On")
+                     else:
+                         wait["inviteprotect"] = True
+                         if wait["lang"] == "JP":
+                             cl.sendText(msg.to,"ρяσтє¢тισи ιиνιтє ѕєт тσ σи")
+                         else:
+                             cl.sendText(msg.to,"ρяσтє¢тισи ιиνιтє αℓяєα∂у σи")
+             elif msg.text.lower() == 'cancel on':
+                 if msg.from_ in admin:
+                     if wait["cancelprotect"] == True:
+                         if wait["lang"] == "JP":
+                             cl.sendText(msg.to,"¢αи¢єℓ ρяσтє¢тισи ѕєт тσ σи")
+                         else:
+                             cl.sendText(msg.to,"¢αи¢єℓ ρяσтє¢тισи αℓяєα∂у σи")
+                     else:
+                         wait["cancelprotect"] = True
+                         if wait["lang"] == "JP":
+                             cl.sendText(msg.to,"¢αи¢єℓ ρяσтє¢тισи ѕєт тσ σи")
+                         else:
+                             cl.sendText(msg.to,"¢αи¢єℓ ρяσтє¢тισи αℓяєα∂у σи")
             elif msg.text in ["Cv1"]:
                 msg.contentType = 13
                 msg.contentMetadata = {'mid': Amid}
@@ -1271,6 +1700,25 @@ def bot(op):
                         cl.sendText(msg.to,"Can't be used outside the group")
                     else:
                         cl.sendText(msg.to,"Not for use less than group")
+            elif msg.text in ["Like on","like on"]:
+                if msg.from_ in admin:
+                    if wait['likeOn'] == True:
+                        if wait["lang"] == "JP":
+                            cl.sendText(msg.to,"Done")
+                    else:
+                        wait['likeOn'] = True
+                        if wait["lang"] == "JP":
+                            cl.sendText(msg.to,"Already")
+                            
+            elif msg.text in ["Like off","like off"]:
+                if msg.from_ in admin:
+                    if wait['likeOn'] == False:
+                        if wait["lang"] == "JP":
+                            cl.sendText(msg.to,"Done")
+                    else:
+                        wait['likeOn'] = False
+                        if wait["lang"] == "JP":
+                            cl.sendText(msg.to,"Already")
             elif msg.text in ["Comment bl "]:
                 wait["wblack"] = True
                 cl.sendText(msg.to,"add to comment bl")
@@ -1321,7 +1769,7 @@ def bot(op):
                 else:
                     cl.sendText(msg.to,"Please turn on the name clock")
 
-            elif msg.text == "$set":
+            elif msg.text == "Set":
                     cl.sendText(msg.to, "Check sider")
                     ki.sendText(msg.to, "Check sider")
                     kk.sendText(msg.to, "Check sider")
@@ -1335,7 +1783,7 @@ def bot(op):
                     wait2['readMember'][msg.to] = ""
                     wait2['ROM'][msg.to] = {}
                     print wait2
-            elif msg.text == "$read":
+            elif msg.text == "Read":
                     if msg.to in wait2['readPoint']:
                         if wait2["ROM"][msg.to].items() == []:
                             chiya = ""
@@ -1456,7 +1904,7 @@ def bot(op):
                     except:
                         pass
 #-----------------------------------------------
-            elif msg.text in ["Tg","Tag all"]:
+            elif msg.text in ["Tg","Tagall"]:
                 group = cl.getGroup(msg.to)
                 jw = [contact.mid for contact in group.members]
                 cb = ""
@@ -1479,10 +1927,48 @@ def bot(op):
                     cl.sendMessage(msg)
                 except Exception as error:
                     print error
-
+#-----------------------------------------------
+            elif msg.text in ["Welcome on","welcome on"]:
+                if msg.from_ in admin:
+                    if wait["Wc"] == True:
+                        if wait["lang"] == "JP":
+                            kr.sendText(msg.to,"Done")
+                    else:
+                        wait["Wc"] = True
+                        if wait["lang"] == "JP":
+                            kr.sendText(msg.to,"already on")
+            elif msg.text in ["Welcome off","welcome off"]:
+                if msg.from_ in admin:
+                    if wait["Wc"] == False:
+                        if wait["lang"] == "JP":
+                            kr.sendText(msg.to,"Done")
+                    else:
+                        wait["Wc"] = False
+                        if wait["lang"] == "JP":
+                            kr.sendText(msg.to,"already oғғ")
+#==============================================================================#
+            elif msg.text in ["Pergi on","pergi on"]:
+                if msg.from_ in admin:
+                    if wait["Lv"] == True:
+                        if wait["lang"] == "JP":
+                            kr.sendText(msg.to,"noтιғ yg leave on")
+                    else:
+                        wait["Lv"] = True
+                        if wait["lang"] == "JP":
+                            kr.sendText(msg.to,"already on")
+            elif msg.text in ["Pergi off","pergi off"]:
+                if msg.from_ in admin:
+                    if wait["Lv"] == False:
+                        if wait["lang"] == "JP":
+                            kr.sendText(msg.to,"noтιғ yg leave oғғ")
+                    else:
+                        wait["Lv"] = False
+                        if wait["lang"] == "JP":
+                            kr.sendText(msg.to,"already oғғ")
 #-----------------------------------------------
             elif msg.text in ["Kill"]:
-                if msg.toType == 2:
+                if msg.from_ in admin:
+                 if msg.toType == 2:
                     group = ki.getGroup(msg.to)
                     gMembMids = [contact.mid for contact in group.members]
                     matched_list = []
@@ -1500,35 +1986,36 @@ def bot(op):
                             print (msg.to,[jj])
                         except:
                             pass
-            elif "Cleanse" in msg.text:
-                if msg.toType == 2:
+            elif "Ratakan" in msg.text:
+                if msg.from_ in admin:
+                 if msg.toType == 2:
                     print "ok"
-                    _name = msg.text.replace("Cleanse","")
+                    _name = msg.text.replace("Ratakan","")
                     gs = ki.getGroup(msg.to)
                     gs = kk.getGroup(msg.to)
                     gs = kc.getGroup(msg.to)
-                    ki.sendText(msg.to,"Just some casual cleansing ô")
-                    kk.sendText(msg.to,"Group cleansed.")
-                    kc.sendText(msg.to,"Fuck You All")
+                    cl.sendText(msg.to,"Just some casual cleansing ")
+                    cl.sendText(msg.to,"I'M SKYLINE TEAM BOT")
+                    cl.sendText(msg.to,"NOT BAPER Okay")
                     targets = []
                     for g in gs.members:
                         if _name in g.displayName:
                             targets.append(g.mid)
                     if targets == []:
-                        ki.sendText(msg.to,"Not found.")
-                        kk.sendText(msg.to,"Not found.")
-                        kc.sendText(msg.to,"Not found.")
+                        cl.sendText(msg.to,"Not found.")
+                        cl.sendText(msg.to,"Not found.")
+                        cl.sendText(msg.to,"Not found.")
                     else:
                         for target in targets:
                             try:
-                                klist=[ki,kk,kc]
+                                klist=[cl,kk,kc]
                                 kicker=random.choice(klist)
                                 kicker.kickoutFromGroup(msg.to,[target])
                                 print (msg.to,[g.mid])
                             except:
-                                ki.sendText(msg.to,"Group cleanse")
-                                kk.sendText(msg.to,"Group cleanse")
-                                kc.sendText(msg.to,"Group cleanse")
+                                cl.sendText(msg.to,"Group cleanse")
+                                cl.sendText(msg.to,"Group cleanse")
+                                cl.sendText(msg.to,"Group cleanse")
             elif "Nk " in msg.text:
                   if msg.from_ in admin:
                        nk0 = msg.text.replace("Nk ","")
@@ -1555,6 +2042,7 @@ def bot(op):
                                     ki.sendText(msg.to,"Succes Cv")
                                     kk.sendText(msg.to,"Fuck You")
             elif "Blacklist @ " in msg.text:
+                if msg.from_ in admin:
                 _name = msg.text.replace("Blacklist @ ","")
                 _kicktarget = _name.rstrip(' ')
                 gs = ki2.getGroup(msg.to)
@@ -1574,7 +2062,8 @@ def bot(op):
                                 except:
                                     ki.sendText(msg.to,"error")
             elif "Ban @" in msg.text:
-                if msg.toType == 2:
+                if msg.from_ in admin:
+                 if msg.toType == 2:
                     print "[Ban]ok"
                     _name = msg.text.replace("Ban @","")
                     _nametarget = _name.rstrip('  ')
@@ -1604,7 +2093,8 @@ def bot(op):
                                 kk.sendText(msg.to,"Error")
                                 kc.sendText(msg.to,"Error")
             elif "Unban @" in msg.text:
-                if msg.toType == 2:
+                if msg.from_ in admin:
+                 if msg.toType == 2:
                     print "[Unban]ok"
                     _name = msg.text.replace("Unban @","")
                     _nametarget = _name.rstrip('  ')
@@ -1645,14 +2135,431 @@ def bot(op):
 				kk.sendText(msg.to,(bctxt))
 				kc.sendText(msg.to,(bctxt))
 #-----------------------------------------------
-
+            elif msg.text in ["Glist"]:
+                if msg.from_ in owner:
+                    gid = kr.getGroupIdsJoined()
+                    h = ""
+                    for i in gid:
+                        h += "%s\n" % (kr.getGroup(i).name +" ? ["+str(len(kr.getGroup(i).members))+"]")
+                    kr.sendText(msg.to,"-- List Groups --\n\n"+ h +"\nTotal groups =" +" ["+str(len(gid))+"]")
+#-----------------------------------------------
+            elif "Hello" == msg.text.lower():
+                if msg.from_ in admin:
+                    group = cl.getGroup(msg.to)
+                    nama = [contact.mid for contact in group.members]
+                    nm1, nm2, nm3, nm4, nm5, jml = [], [], [], [], [], len(nama)
+                    if jml <= 100:
+                        summon(msg.to, nama)
+                    if jml > 100 and jml < 200:
+                        for i in range(0, 99):
+                            nm1 += [nama[i]]
+                        summon(msg.to, nm1)
+                        for j in range(100, len(nama)-1):
+                            nm2 += [nama[j]]
+                        summon(msg.to, nm2)
+                    if jml > 200  and jml < 500:
+                        for i in range(0, 99):
+                            nm1 += [nama[i]]
+                        summon(msg.to, nm1)
+                        for j in range(100, 199):
+                            nm2 += [nama[j]]
+                        summon(msg.to, nm2)
+                        for k in range(200, 299):
+                            nm3 += [nama[k]]
+                        summon(msg.to, nm3)
+                        for l in range(300, 399):
+                            nm4 += [nama[l]]
+                        summon(msg.to, nm4)
+                        for m in range(400, len(nama)-1):
+                            nm5 += [nama[m]]
+                        summon(msg.to, nm5)
+                    if jml > 500:
+                        print "Terlalu Banyak Men 500+"
+                    cnt = Message()
+                    cnt.text = "Jumlah:\n" + str(jml) +  " Members"
+                    cnt.to = msg.to
+                    cl.sendMessage(cnt)
+#-----------------------------------------------
             elif msg.text in ["Cv say hi"]:
                 ki.sendText(msg.to,"Hi buddy 􀜁􀅔Har Har􏿿")
                 kk.sendText(msg.to,"Hi buddy 􀜁􀅔Har Har􏿿")
                 kc.sendText(msg.to,"Hi buddy 􀜁􀅔Har Har􏿿")
-
+#------------------------------------------------
+            elif "Rename " in msg.text:
+                if msg.from_ in admin:
+                    string = msg.text.replace("Rename ","")
+                    if len(string.decode('utf-8')) <= 10000000000:
+                        profile = cl.getProfile()
+                        profile.displayName = string
+                        cl.updateProfile(profile)
+                        cl.sendText(msg.to,"Changed " + string + "")
 #-----------------------------------------------
+#-----------------------------------------------
+#-----------------------------------------------
+            elif "youtube " in msg.text:
+                if msg.from_ in admin:
+                    try:
+                        textToSearch = (msg.text).replace("youtube ", "").strip()
+                        query = urllib.quote(textToSearch)
+                        url = "https://www.youtube.com/results?search_query=" + query
+                        response = urllib2.urlopen(url)
+                        html = response.read()
+                        soup = BeautifulSoup(html, "html.parser")
+                        results = soup.find(attrs={'class': 'yt-uix-tile-link'})
+                        ght = ('https://www.youtube.com' + results['href'])
+                        kr.sendVideoWithURL(msg.to, ght)
+                    except:
+                        kr.sendVideoWithURL(msg.to, ght)
+                        kr.sendText(msg.to, "Could not find it")
 
+            elif "Yt " in msg.text:
+                if msg.from_ in admin:
+                        query = msg.text.replace("Yt ","")
+                        query = yt(query)
+                        with requests.session() as s:
+                             isi = []
+                             if query == "":
+                                 query = "S1B tanysyz"
+                             s.headers['user-agent'] = 'Mozilla/5.0'
+                             url    = 'http://www.youtube.com/results'
+                             params = {'search_query': query}
+                             r    = s.get(url, params=params)
+                             soup = BeautifulSoup(r.content, 'html5lib')
+                             hasil = ""
+                             for a in soup.select('.yt-lockup-title > a[title]'):
+                                if '&list=' not in a['href']:
+                                    if 'watch?v' in a['href']:
+                                        b = a['href'].replace('watch?v=', '')
+                                        isi += ['youtu.be' + b]
+                             kr.sendVideoWithURL(msg.to,hasil)
+                             kr.sendText(msg.to,hasil)
+
+            elif "Youtube " in msg.text:
+                if msg.from_ in admin:
+                    query = msg.text.replace("Youtube ","")
+                    with requests.session() as s:
+                        s.headers['user-agent'] = 'Mozilla/5.0'
+                        url = 'http://www.youtube.com/results'
+                        params = {'search_query': query}
+                        r = s.get(url, params=params)
+                        soup = BeautifulSoup(r.content, 'html5lib')
+                        hasil = ""
+                        for a in soup.select('.yt-lockup-title > a[title]'):
+                            if '&list=' not in a['href']:
+                                hasil += ''.join((a['title'],'\nUrl : http://www.youtube.com' + a['href'],'\n\n'))
+                        kr.sendText(msg.to,hasil)
+                        kr.sendVideoWithURL(msg.to,hasil)
+                        print '[Command] Youtube Search'
+                        
+            elif "Lirik " in msg.text:
+                if msg.from_ in admin:
+                    try:
+                        songname = msg.text.lower().replace("Lirik ","")
+                        params = {'songname': songname}
+                        r = requests.get('http://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
+                        data = r.text
+                        data = json.loads(data)
+                        for song in data:
+                            hasil = 'Lyric Lagu ('
+                            hasil += song[0]
+                            hasil += ')\n\n'
+                            hasil += song[5]
+                            kr.sendText(msg.to, hasil)
+                    except Exception as wak:
+                            kr.sendText(msg.to, str(wak))
+                            
+            elif "Wikipedia " in msg.text:
+                if msg.from_ in admin:
+                    try:
+                        wiki = msg.text.lower().replace("Wikipedia ","")
+                        wikipedia.set_lang("id")
+                        pesan="Title ("
+                        pesan+=wikipedia.page(wiki).title
+                        pesan+=")\n\n"
+                        pesan+=wikipedia.summary(wiki, sentences=1)
+                        pesan+="\n"
+                        pesan+=wikipedia.page(wiki).url
+                        kr.sendText(msg.to, pesan)
+                    except:
+                        try:
+                            pesan="Over Text Limit! Please Click link\n"
+                            pesan+=wikipedia.page(wiki).url
+                            kr.sendText(msg.to, pesan)
+                        except Exception as e:
+                            kr.sendText(msg.to, str(e))
+                              
+            elif "Music " in msg.text:
+                if msg.from_ in admin:
+                    try:
+                        songname = msg.text.lower().replace("Music ","")
+                        params = {'songname': songname}
+                        r = requests.get('http://ide.fdlrcn.com/workspace/yumi-apis/joox?' + urllib.urlencode(params))
+                        data = r.text
+                        data = json.loads(data)
+                        for song in data:
+                            hasil = 'This is Your Music\n'
+                            hasil += 'Judul : ' + song[0]
+                            hasil += '\nDurasi : ' + song[1]
+                            hasil += '\nLink Download : ' + song[4]
+                            kr.sendText(msg.to, hasil)
+                            kr.sendText(msg.to, "Please Wait for audio...")
+                            kr.sendAudioWithURL(msg.to, song[4])
+                    except Exception as njer:
+                            kr.sendText(msg.to, str(njer))
+                
+            elif "Image " in msg.text:
+                if msg.from_ in admin:
+                    search = msg.text.replace("Image ","")
+                    url = 'https://www.google.com/search?espv=2&biw=1366&bih=667&tbm=isch&oq=kuc&aqs=mobile-gws-lite.0.0l5&q=' + search
+                    raw_html = (download_page(url))
+                    items = []
+                    items = items + (_images_get_all_items(raw_html))
+                    path = random.choice(items)
+                    print path
+                    try:
+                        kr.sendImageWithURL(msg.to,path)
+                        kr.sendText(msg.to,path)
+                    except:
+                        pass           
+                
+            elif "Profileig " in msg.text:
+                if msg.from_ in admin:
+                    try:
+                        instagram = msg.text.replace("Profileig ","")
+                        response = requests.get("https://www.instagram.com/"+instagram+"?__a=1")
+                        data = response.json()
+                        namaIG = str(data['user']['full_name'])
+                        bioIG = str(data['user']['biography'])
+                        mediaIG = str(data['user']['media']['count'])
+                        verifIG = str(data['user']['is_verified'])
+                        usernameIG = str(data['user']['username'])
+                        followerIG = str(data['user']['followed_by']['count'])
+                        profileIG = data['user']['profile_pic_url_hd']
+                        privateIG = str(data['user']['is_private'])
+                        followIG = str(data['user']['follows']['count'])
+                        link = "Link: " + "https://www.instagram.com/" + instagram
+                        text = "Name : "+namaIG+"\nUsername : "+usernameIG+"\nBiography : "+bioIG+"\nFollower : "+followerIG+"\nFollowing : "+followIG+"\nPost : "+mediaIG+"\nVerified : "+verifIG+"\nPrivate : "+privateIG+"" "\n" + link
+                        kr.sendImageWithURL(msg.to, profileIG)
+                        kr.sendText(msg.to, str(text))
+                    except Exception as e:
+                        kr.sendText(msg.to, str(e))
+#-----------------------------------------------
+            elif "Tr-id " in msg.text:
+                isi = msg.text.replace("Tr-id ","")
+                translator = Translator()
+                hasil = translator.translate(isi, dest='id')
+                A = hasil.text
+                A = A.encode('utf-8')
+                cl.sendText(msg.to, A)
+            elif "Tr-en " in msg.text:
+                isi = msg.text.replace("Tr-en ","")
+                translator = Translator()
+                hasil = translator.translate(isi, dest='en')
+                A = hasil.text
+                A = A.encode('utf-8')
+                cl.sendText(msg.to, A)
+            elif "Tr-ar" in msg.text:
+                isi = msg.text.replace("Tr-ar ","")
+                translator = Translator()
+                hasil = translator.translate(isi, dest='ar')
+                A = hasil.text
+                A = A.encode('utf-8')
+                cl.sendText(msg.to, A)
+            elif "Tr-jp" in msg.text:
+                isi = msg.text.replace("Tr-jp ","")
+                translator = Translator()
+                hasil = translator.translate(isi, dest='ja')
+                A = hasil.text
+                A = A.encode('utf-8')
+                cl.sendText(msg.to, A)
+            elif "Tr-ko" in msg.text:
+                isi = msg.text.replace("Tr-ko ","")
+                translator = Translator()
+                hasil = translator.translate(isi, dest='ko')
+                A = hasil.text
+                A = A.encode('utf-8')
+                cl.sendText(msg.to, A)
+            
+            elif "Id-en" in msg.text:
+                bahasa_awal = 'id'
+                bahasa_tujuan = 'en'
+                kata = msg.text.replace("Id@en ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"**FROM ID**\n" + "" + kata + "\n**TO ENGLISH**\n" + "" + result + "\n**SUKSES**")
+            elif "En-id" in msg.text:
+                bahasa_awal = 'en'
+                bahasa_tujuan = 'id'
+                kata = msg.text.replace("En@id ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"**FROM EN**\n" + "" + kata + "\n**TO ID**\n" + "" + result + "\n**SUKSES**")
+            elif "Id-jp" in msg.text:
+                bahasa_awal = 'id'
+                bahasa_tujuan = 'ja'
+                kata = msg.text.replace("Id@jp ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"**FROM ID**\n" + "" + kata + "\n**TO JP**\n" + "" + result + "\n**SUKSES**")
+            elif "Jp-id" in msg.text:
+                bahasa_awal = 'ja'
+                bahasa_tujuan = 'id'
+                kata = msg.text.replace("Jp@id ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"----FROM JP----\n" + "" + kata + "\n----TO ID----\n" + "" + result + "\n------SUKSES-----")
+            elif "Id-th" in msg.text:
+                bahasa_awal = 'id'
+                bahasa_tujuan = 'th'
+                kata = msg.text.replace("Id@th ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"----FROM ID----\n" + "" + kata + "\n----TO TH----\n" + "" + result + "\n------SUKSES-----")
+            elif "Th-id" in msg.text:
+                bahasa_awal = 'th'
+                bahasa_tujuan = 'id'
+                kata = msg.text.replace("Th@id ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"----FROM TH----\n" + "" + kata + "\n----TO ID----\n" + "" + result + "\n------SUKSES-----")
+            elif "Id-jp" in msg.text:
+                bahasa_awal = 'id'
+                bahasa_tujuan = 'ja'
+                kata = msg.text.replace("Id@jp ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"----FROM ID----\n" + "" + kata + "\n----TO JP----\n" + "" + result + "\n------SUKSES-----")
+            elif "Id-ar" in msg.text:
+                bahasa_awal = 'id'
+                bahasa_tujuan = 'ar'
+                kata = msg.text.replace("Id@ar ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"----FROM ID----\n" + "" + kata + "\n----TO AR----\n" + "" + result + "\n------SUKSES-----")
+            elif "Ar-id" in msg.text:
+                bahasa_awal = 'ar'
+                bahasa_tujuan = 'id'
+                kata = msg.text.replace("Ar@id ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"----FROM AR----\n" + "" + kata + "\n----TO ID----\n" + "" + result + "\n------SUKSES-----")
+            elif "Id-ko" in msg.text:
+                bahasa_awal = 'id'
+                bahasa_tujuan = 'ko'
+                kata = msg.text.replace("Id@ko ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"----FROM ID----\n" + "" + kata + "\n----TO KO----\n" + "" + result + "\n------SUKSES-----")
+            elif "Ko-id" in msg.text:
+                bahasa_awal = 'ko'
+                bahasa_tujuan = 'id'
+                kata = msg.text.replace("Ko@id ","")
+                url = 'https://translate.google.com/m?sl=%s&tl=%s&ie=UTF-8&prev=_m&q=%s' % (bahasa_awal, bahasa_tujuan, kata.replace(" ", "+"))
+                agent = {'User-Agent':'Mozilla/5.0'}
+                cari_hasil = 'class="t0">'
+                request = urllib2.Request(url, headers=agent)
+                page = urllib2.urlopen(request).read()
+                result = page[page.find(cari_hasil)+len(cari_hasil):]
+                result = result.split("<")[0]
+                cl.sendText(msg.to,"----FROM KO----\n" + "" + kata + "\n----TO ID----\n" + "" + result + "\n------SUKSES-----")
+                
+            elif msg.text.lower() == 'welcome':
+                ginfo = kr.getGroup(msg.to)
+                kr.sendText(msg.to,"Selamat Datang Di Grup " + str(ginfo.name))
+                jawaban1 = ("Selamat Datang Di Grup " + str(ginfo.name))
+                kr.sendText(msg.to,"Owner Grup " + str(ginfo.name) + " :\n" + ginfo.creator.displayName )
+                tts = gTTS(text=jawaban1, lang='id')
+                tts.save('tts.mp3')
+                cl.sendAudio(msg.to,'tts.mp3')
+            
+            elif "Say-id " in msg.text:
+                say = msg.text.replace("Say-id ","")
+                lang = 'id'
+                tts = gTTS(text=say, lang=lang)
+                tts.save("hasil.mp3")
+                cl.sendAudio(msg.to,"hasil.mp3")
+                
+            elif "Say-en " in msg.text:
+                say = msg.text.replace("Say-en ","")
+                lang = 'en'
+                tts = gTTS(text=say, lang=lang)
+                tts.save("hasil.mp3")
+                cl.sendAudio(msg.to,"hasil.mp3")
+                
+            elif "Say-jp " in msg.text:
+                say = msg.text.replace("Say-jp ","")
+                lang = 'ja'
+                tts = gTTS(text=say, lang=lang)
+                tts.save("hasil.mp3")
+                cl.sendAudio(msg.to,"hasil.mp3")
+                
+            elif "Say-ar " in msg.text:
+                say = msg.text.replace("Say-ar ","")
+                lang = 'ar'
+                tts = gTTS(text=say, lang=lang)
+                tts.save("hasil.mp3")
+                cl.sendAudio(msg.to,"hasil.mp3")
+                
+            elif "Say-ko " in msg.text:
+                say = msg.text.replace("Say-ko ","")
+                lang = 'ko'
+                tts = gTTS(text=say, lang=lang)
+                tts.save("hasil.mp3")
+                cl.sendAudio(msg.to,"hasil.mp3")
+#-----------------------------------------------
+#-----------------------------------------------
+#-----------------------------------------------
+#-----------------------------------------------
             elif msg.text in ["Cv say hinata pekok"]:
                 ki.sendText(msg.to,"Hinata pekok 􀜁􀅔Har Har􏿿")
                 kk.sendText(msg.to,"Hinata pekok 􀜁􀅔Har Har􏿿")
@@ -1689,10 +2596,6 @@ def bot(op):
                 cl.sendText(msg.to, "Progress...")
                 elapsed_time = time.time() - start
                 cl.sendText(msg.to, "%sseconds" % (elapsed_time))
-                ki.sendText(msg.to, "%sseconds" % (elapsed_time))
-                kk.sendText(msg.to, "%sseconds" % (elapsed_time))
-                kc.sendText(msg.to, "%sseconds" % (elapsed_time))
-
 #------------------------------------------------------------------	
             elif "Steal home @" in msg.text:            
                 print "[Command]dp executing"
