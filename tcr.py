@@ -17,7 +17,7 @@ except ImportError:
     from urllib3.response import HTTPResponse
 
 cl = LINETCR.LINE()
-cl.login(qr=True)
+cl.login(token="EoDcyrjQsTaRkLydFeY5.PT0fO6oRxm3RJkmvumHfXq.IxSTCDp5KRZVOlK2w60R8sT6tjPUtlEKqDfu2cXWztY=")
 cl.loginResult()
 
 ki = kk = kc = cl 
@@ -32,8 +32,7 @@ helpMessage ="""
 ║╠❂➣CREATOR SKYLINE
 ╚═════════════════════
 ╔═════════════════════
-╠❂➣ Id︎
-╠❂➣ Mid
+╠❂➣ Myid
 ╠❂➣ Me︎
 ╠❂➣ Mc 「mid」
 ╠❂➣ Group cancelalll︎
@@ -58,7 +57,8 @@ helpMessage ="""
 ╠❂➣ image
 ╠❂➣ Set
 ╠❂➣ Read
-╠❂➣ Gcreator
+╠❂➣ cctv on/off
+╠❂➣ Dor
 ╠❂➣ Id-en
 ╠❂➣ En-id
 ╠❂➣ Id-jp
@@ -89,6 +89,7 @@ helpMessage ="""
 ╠❂➣ Qr on
 ╠❂➣ Cancel on
 ╠❂➣ Protect on
+╠❂➣ clone @
 ╚═════════════════════
 """
 KAC=[cl,ki,kk,kc]
@@ -98,7 +99,7 @@ Bmid = kk.getProfile().mid
 Cmid = kc.getProfile().mid
 
 Bots=[mid,Amid,Bmid,Cmid]
-admin=["YOUR_MID_HERE"]
+admin=["uc77fd25b59f6e563d84f1334f3fed10b"]
 wait = {
     'contact':True,
     'autoJoin':True,
@@ -121,11 +122,11 @@ wait = {
     "wblacklist":False,
     "dblacklist":False,
     "protectionOn":True,
-    "atjointicket":False
     "protect":False,
     "cancelprotect":False,
     "inviteprotect":False,
     "linkprotect":False,
+    "atjointicket":False
     }
 
 wait2 = {
@@ -590,6 +591,7 @@ def bot(op):
                             cl.rejectGroupInvitation(op.param1)
                         else:
                             cl.acceptGroupInvitation(op.param1)
+                            cl.sendText(op.param1,"Terimakasih Telah Invite Bot Public Skyline\nCreator line.me/ti/p/~@enr7503k\nKetik Help Untuk Melihat Menu")
                     else:
                         cl.acceptGroupInvitation(op.param1)
                 elif wait["autoCancel"]["on"] == True:
@@ -946,9 +948,9 @@ def bot(op):
                 kc.findAndAddContactsByMid(midd)
                 kc.inviteIntoGroup(msg.to,[midd])
             elif msg.text in ["Me"]:
-                msg.contentType = 13
-                msg.contentMetadata = {'mid': mid}
-                cl.sendMessage(msg)
+	                msg.contentType = 13
+	                msg.contentMetadata = {'mid': msg.from_}
+	                cl.sendMessage(msg)
              elif msg.text.lower() == 'protect on':
                  if msg.from_ in admin:
                      if wait["protect"] == True:
@@ -1243,14 +1245,8 @@ def bot(op):
                 ki.sendText(msg.to,Amid)
                 kk.sendText(msg.to,Bmid)
                 kc.sendText(msg.to,Cmid)
-            elif "Mid" == msg.text:
-                cl.sendText(msg.to,mid)
-            elif "Cv1 mid" == msg.text:
-                ki.sendText(msg.to,Amid)
-            elif "Cv2 mid" == msg.text:
-                kk.sendText(msg.to,Bmid)
-            elif "Cv3 mid" == msg.text:
-                kc.sendText(msg.to,Cmid)
+	    elif 'Myid' in msg.text:
+		cl.sendText(msg.to,msg.from_)
             elif msg.text in ["Wkwk"]:
                 msg.contentType = 7
                 msg.text = None
@@ -1487,6 +1483,7 @@ def bot(op):
                     else:
                         cl.sendText(msg.to,"è¦äº†å…³æ–­ã€‚")
             elif msg.text in ["Set"]:
+               if msg.from_ in admin:
                 md = ""
                 if wait["contact"] == True: md+=" Contact : on\n"
                 else: md+=" Contact : off\n"
@@ -1806,6 +1803,76 @@ def bot(op):
                         cl.sendText(msg.to, "People who readed %s\nthat's it\n\nPeople who have ignored reads\n%sIt is abnormal ♪\n\nReading point creation date n time:\n[%s]"  % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
                         cl.sendText(msg.to, "An already read point has not been set.\n「set」you can send ♪ read point will be created ♪")
+
+            elif "cctv on" == msg.text.lower():
+                    if msg.to in wait2['readPoint']:
+                            try:
+                                del wait2['readPoint'][msg.to]
+                                del wait2['readMember'][msg.to]
+                                del wait2['setTime'][msg.to]
+                            except:
+                                pass
+                            wait2['readPoint'][msg.to] = msg.id
+                            wait2['readMember'][msg.to] = ""
+                            wait2['setTime'][msg.to] = datetime.now().strftime('%H:%M:%S')
+                            wait2['ROM'][msg.to] = {}
+                            with open('sider.json', 'w') as fp:
+                             json.dump(wait2, fp, sort_keys=True, indent=4)
+                             kr.sendText(msg.to,"Setpoint already on")
+                    else:
+                        try:
+                                del wait2['readPoint'][msg.to]
+                                del wait2['readMember'][msg.to]
+                                del wait2['setTime'][msg.to]
+                        except:
+                              pass
+                        wait2['readPoint'][msg.to] = msg.id
+                        wait2['readMember'][msg.to] = ""
+                        wait2['setTime'][msg.to] = datetime.now().strftime('%H:%M:%S')
+                        wait2['ROM'][msg.to] = {}
+                        with open('sider.json', 'w') as fp:
+                         json.dump(wait2, fp, sort_keys=True, indent=4)
+                         kr.sendText(msg.to, "Set reading point:\n" + datetime.now().strftime('%H:%M:%S'))
+                         print wait2
+
+            elif "cctv off" == msg.text.lower():
+                    if msg.to not in wait2['readPoint']:
+                        kr.sendText(msg.to,"Setpoint already off")
+                    else:
+                        try:
+                                del wait2['readPoint'][msg.to]
+                                del wait2['readMember'][msg.to]
+                                del wait2['setTime'][msg.to]
+                        except:
+                              pass
+                        kr.sendText(msg.to, "Delete reading point:\n" + datetime.now().strftime('%H:%M:%S'))
+
+            elif msg.text in ["Dor","Toong"]:
+                    if msg.toType == 2:
+                        print "\nRead aktif..."
+                        if msg.to in wait2['readPoint']:
+                            if wait2['ROM'][msg.to].items() == []:
+                                chiya = ""
+                            else:
+                                chiya = ""
+                                for rom in wait2['ROM'][msg.to].items():
+                                    print rom
+                                    chiya += rom[1] + "\n"
+                            cl.sendText(msg.to, "╔═════════════ \n╠❂➣Sider :\n╠═════════════                     %s\n╠\n╠═════════════\n╠❂➣Reader :\n╠═════════════ %s\n╠\n╠═════════════\n╠In the last seen point:\n╠[%s]\n╚═════════════" % (wait2['readMember'][msg.to],chiya,setTime[msg.to]))
+                            print "\nReading Point Set..."
+                            try:
+                                del wait2['readPoint'][msg.to]
+                                del wait2['readMember'][msg.to]
+                            except:
+                                pass
+                            wait2['readPoint'][msg.to] = msg.id
+                            wait2['readMember'][msg.to] = ""
+                            wait2['setTime'][msg.to] = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+                            wait2['ROM'][msg.to] = {}
+                            print "toong ready"
+                            cl.sendText(msg.to, "Auto Read Point!!" + (wait2['setTime'][msg.to]))
+                        else:
+                            cl.sendText(msg.to, "Ketik [Cctv on] dulu, baru ketik [Toong]")
 #-----------------------------------------------
 
 #-----------------------------------------------
@@ -1913,6 +1980,13 @@ def bot(op):
                         kc.leaveGroup(msg.to)
                     except:
                         pass
+#-----------------------------------------------
+	    elif msg.text in ["Creator","creator"]:
+		cr = "uc77fd25b59f6e563d84f1334f3fed10b"
+		msg.contentType = 13
+		msg.contentMetadata = {'mid': cr}
+		cl.sendMessage(msg)
+		cl.sendText(msg.to,"My Creator")
 #-----------------------------------------------
             elif "playstore " in msg.text.lower():
                     tob = msg.text.lower().replace("playstore ","")
@@ -2149,11 +2223,188 @@ def bot(op):
                 kk.sendText(msg.to,"Ok Cv 􀨁􀄻double thumbs up􏿿")
                 kc.sendText(msg.to,"Ok Cv 􀨁􀄻double thumbs up􏿿")
 #-----------------------------------------------
-            elif "Bc " in msg.text:
-				bctxt = msg.text.replace("Bc ","")
-				ki.sendText(msg.to,(bctxt))
-				kk.sendText(msg.to,(bctxt))
-				kc.sendText(msg.to,(bctxt))
+            elif "Say " in msg.text:
+				bctxt = msg.text.replace("Say ","")
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
+				cl.sendText(msg.to,(bctxt))
 #-----------------------------------------------
             elif msg.text in ["Glist"]:
                 if msg.from_ in admin:
@@ -2165,6 +2416,42 @@ def bot(op):
 #-----------------------------------------------
             elif "Hello" == msg.text.lower():
                 if msg.from_ in admin:
+                    group = cl.getGroup(msg.to)
+                    nama = [contact.mid for contact in group.members]
+                    nm1, nm2, nm3, nm4, nm5, jml = [], [], [], [], [], len(nama)
+                    if jml <= 100:
+                        summon(msg.to, nama)
+                    if jml > 100 and jml < 200:
+                        for i in range(0, 99):
+                            nm1 += [nama[i]]
+                        summon(msg.to, nm1)
+                        for j in range(100, len(nama)-1):
+                            nm2 += [nama[j]]
+                        summon(msg.to, nm2)
+                    if jml > 200  and jml < 500:
+                        for i in range(0, 99):
+                            nm1 += [nama[i]]
+                        summon(msg.to, nm1)
+                        for j in range(100, 199):
+                            nm2 += [nama[j]]
+                        summon(msg.to, nm2)
+                        for k in range(200, 299):
+                            nm3 += [nama[k]]
+                        summon(msg.to, nm3)
+                        for l in range(300, 399):
+                            nm4 += [nama[l]]
+                        summon(msg.to, nm4)
+                        for m in range(400, len(nama)-1):
+                            nm5 += [nama[m]]
+                        summon(msg.to, nm5)
+                    if jml > 500:
+                        print "Terlalu Banyak Men 500+"
+                    cnt = Message()
+                    cnt.text = "Jumlah:\n" + str(jml) +  " Members"
+                    cnt.to = msg.to
+                    cl.sendMessage(cnt)
+#-----------------------------------------------
+            elif "Tagall" == msg.text.lower():
                     group = cl.getGroup(msg.to)
                     nama = [contact.mid for contact in group.members]
                     nm1, nm2, nm3, nm4, nm5, jml = [], [], [], [], [], len(nama)
@@ -2667,7 +2954,27 @@ def bot(op):
                             cl.sendImageWithURL(msg.to, path)
                         except:
                             pass
-                print "[Command]dp executed"			
+                print "[Command]dp executed"	
+#------------------------------------------------------------------
+	    elif "clone @" in msg.text:
+		if msg.from_ in admin:
+			if msg.toType == 2:
+				name = msg.text.replace("clone @","")
+                                nametarget = name.rstrip(' ')
+                                gs = cl.getGroup(msg.to)
+                                target = []
+				for g in gs.members:
+                                        if nametarget == g.displayName:
+						target.append(g.mid)
+                                if target == []:
+                                        cl.sendText(msg.to,"Not found")
+                                else:
+                                        for targets in target:
+						try:
+							cl.clonePicture(targets)
+							cl.sendText(msg.to,"Berhasil")
+						except Exception as e:
+							cl.sendText(msg.to,str(e))		
 #------------------------------------------------------------------
             elif msg.text in ["Ban"]:
                 wait["wblacklist"] = True
